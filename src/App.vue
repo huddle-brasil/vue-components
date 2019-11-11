@@ -1,28 +1,50 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<div id="app">
+		<Sidebar 
+			v-for="sidebar of sidebars" 
+			:key="sidebar.title"
+			:title="sidebar.title" 
+			:navItems="sidebar.navItems" 
+			:navItemsListType="sidebar.navItemsListType"></Sidebar>
+	</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Sidebar from './components/sidebar/DefaultSidebar'
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
+	name: 'app',
+	components: {
+		Sidebar
+	},
+
+	data:()=>({
+		sidebars:[
+			{
+				title: 'Empresa',
+				navItems: ["Barcelona F.C", "S.E Palmeiras", "Philadelfia Eagles"],
+				navItemsListType: 'dot',
+			},
+			{
+				title: 'Workspace',
+				navItems: ["Programa de estágio USIMINAS 2020", "Programa de trainee Líder aviação 2020"],
+				navItemsListType: 'arrow',
+			}
+		]
+	}),
+
+	created(){
+
+	}
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style >
+	@import url('https://fonts.googleapis.com/css?family=Exo:200,400,700,900');
+	@import 'assets/styles/reset.css';
+	@import 'assets/styles/main.css';
+
+	#app{
+		display: flex;
+	}
 </style>

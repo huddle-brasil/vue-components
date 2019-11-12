@@ -6,16 +6,21 @@
 			:title="sidebar.title" 
 			:navItems="sidebar.navItems" 
 			:navItemsListType="sidebar.navItemsListType"></Sidebar>
+
+		<table-default 
+			:tableData="tableData" 
+			:tableKeys="tableKeys"></table-default>
 	</div>
 </template>
 
 <script>
 import Sidebar from './components/sidebar/DefaultSidebar'
+import TableDefault from './components/TableDefault'
 
 export default {
 	name: 'app',
 	components: {
-		Sidebar
+		Sidebar,TableDefault
 	},
 
 	data:()=>({
@@ -30,7 +35,15 @@ export default {
 				navItems: ["Programa de estágio USIMINAS 2020", "Programa de trainee Líder aviação 2020"],
 				navItemsListType: 'arrow',
 			}
-		]
+		],
+		tableData : [ 
+			{ name : 'Vitor', age : 22 }, 
+			{ name : 'Caroline', age : 20 },
+			{ name : 'Gabi', age : 22 }, 
+			{ name : 'Delayne', age : 23 }, 
+			{ name : 'Gui', age : 25 }, 
+		],
+		tableKeys : [ { name : 'name', label : 'Nome', filter : true, background : '#fff' }, { name : 'age', label : 'Idade', filter : false, background : '#fff' }  ]
 	}),
 
 	created(){
@@ -47,4 +60,5 @@ export default {
 	#app{
 		display: flex;
 	}
+
 </style>

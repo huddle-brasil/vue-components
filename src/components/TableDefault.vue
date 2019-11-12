@@ -4,17 +4,34 @@
             <th class="table-header-item"
                 v-for="(key, index) in tableKeys" :key="index"
                 :style="{backgroundColor : key.background}"
-                @click="openFilterInput(key)">
-                <span :class="`${key.name}-item`">{{key.label}}</span>
-                <input :class="`${key.name}-input`" class="hide" type="text" :placeholder="key.label" v-model="filterArguments">
+                @click="openFilterInput(key, index)"
+                :ref="`th${index}`">
+                <span 
+                    v-if="!key.filter"
+                    v-show="!selectedFilter || selectedFilter != key.name" 
+                    :class="`${key.name}-item`"
+                    :ref="`${key.name}Item`">{{key.label}}</span>
+                <input 
+                    v-else
+                    :class="`${key.name}-input`"
+                    :ref="`${key.name}Input`" 
+                    type="text" 
+                    :placeholder="key.label" 
+                    v-model="filterArguments"
+                    @blur="focusOutInput(index)">
             </th>
         </thead>
         <tbody class="table-body">
             <tr class="table-row" 
                 v-for="(row, index) in filteredTableData"
-                :key="index">
-                <td class="table-row-item" v-for="(item) in row" :key="item">
-                    {{ item }}
+                :key="index"
+                :ref="`tableRow${index}`"
+                @click="rowSelectionToggle(index, row)">
+                <td class="table-row-item" v-for="(item, key, indexTd) in row" :key="item">
+                    <label v-if="select && indexTd === 0">
+                        <input @click="checkedToggle(index)" :ref="`check${index}`" type="checkbox" name="fruit-2" value="banana">
+                    </label>
+                    <span class="row-item-text">{{ item }}</span>
                 </td>
             </tr>
         </tbody>
@@ -36,17 +53,43 @@ export default {
         tableKeys: {
             type: Array,
             required: true
+        },
+        select: {
+            type: Boolean,
+            default: false
+        },
+        primaryKey: {
+            type: String,
+            required: true
         }
     },
     methods: {
-        openFilterInput(key){
+        openFilterInput(key, index){
             if(!key.filter) return
             this.selectedFilter = key.name 
-            const theadItem = document.querySelector(`.${key.name}-item`)
-            const theadInput = document.querySelector(`.${key.name}-input`)
-            theadItem.classList.add('hide')
-            theadInput.classList.add('show')
-            theadInput.classList.remove('hide')
+            const [ thead ] = this.$refs[`th${index}`]
+            thead.style.backgroundColor = ''
+            thead.classList.add('selectedTh')
+        },
+        rowSelectionToggle(index, rowData){
+            const [ row ] = this.$refs[`tableRow${index}`]
+            let classOperation = 'remove'
+            let emittedAction = 'unselectedRow'
+            if(!row.classList.contains('selected-row')) {
+                classOperation = 'add'
+                emittedAction = 'selectedRow'
+            }
+            row.classList[classOperation]('selected-row') 
+            this.checkedToggle(index)
+            this.$emit(emittedAction, rowData)
+        },
+        checkedToggle(index){
+            const [ check ] = this.$refs[`check${index}`]
+            check.checked = !check.checked
+        },
+        focusOutInput(index){
+            const [ thead ] = this.$refs[`th${index}`]
+            thead.classList.remove('selectedTh')
         }
     },
     computed: {
@@ -83,6 +126,188 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
+    .table-default{
+        width: 70%;
+        margin: 5% auto;
+        table-layout: fixed;
+        border-collapse: separate;
+        border-spacing: 3px 0;
+
+        .table-header{
+            .table-header-item{
+                color: white;
+                font-weight: bold;
+                text-transform: uppercase;
+                height: 35px;
+                vertical-align: middle;
+                font-size: 11px;
+                border-top-right-radius: 5px;
+                border-top-left-radius: 5px;
+                letter-spacing: 2px;
+                background-color: #6c7b84;
+
+                &:first-child{
+                    text-align: left;
+                    padding-left: 50px
+                }
+
+
+                span{
+
+                }
+
+                input{
+                    background: transparent;
+                    border: none;
+                    color: white;
+                    height: 100%;
+                    font-weight: bold;
+                    outline: none;
+
+                    &::placeholder{
+                        color: white;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        font-size: 11px;
+                        letter-spacing: 2px;
+                        width: 100%;
+                    }
+                }
+            }
+
+            .selectedTh{
+                background-color: black;
+            }
+        }
+
+        .table-body{
+
+            .table-row{
+
+                height: 40px;
+                cursor: pointer;
+
+                &:nth-child(even){
+                    background-color: #f7f7f7
+                }
+
+                &:nth-child(odd){
+                    background-color: #ededed;
+                }
+
+                &:hover{
+                    background-color: #743470;
+
+                    .table-row-item{
+                        color: white;
+                        font-weight: bold;
+
+                        input[type=checkbox]{
+                            background-color: #522652;
+                        }
+                    }
+                }
+                
+                .table-row-item{
+
+                    text-align: center;
+                    vertical-align: middle;
+                    color: #2e2e2e;
+                    font-size: 14px;
+
+                    &:first-child{
+                        text-align: left;
+                        /* padding-left: 50px */
+                    }
+
+                    .row-item-text{
+                        &:first-child{
+                            /* padding-left: 50px */
+                        }
+                    }
+
+                    .row-item-checkbox{
+                    }
+
+                    input[type=checkbox] {
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        appearance: none;
+                        outline: none;
+                        cursor: pointer;
+                    }
+
+                    input[type=checkbox] {
+                        position: relative;
+                        width: 20px;
+                        height: 20px;
+                        background-color: #dbdbdb;
+                        font-weight: bold;
+                        font-size: 10px;
+                        text-transform: uppercase;
+                        vertical-align: middle;
+                        color: #2e353a;
+                        margin: 0 15px;
+                    }
+
+                    input[type=checkbox]::before {
+                        content: url('../../public/checked.png');
+                        transform: scale(.75);
+                        position: absolute;
+                        font-size: 13px;
+                        height: 20px;
+                        right: 2px;
+                        top: 2px;
+                        visibility: hidden;
+                    }
+
+                    input[type=checkbox]:checked::before {
+                        /* Use `visibility` instead of `display` to avoid recalculating layout */
+                        visibility: visible;
+                    }
+
+                    input[type=checkbox]:disabled {
+                        border-color: black;
+                        background: #ddd;
+                        color: gray;
+                    }
+                }
+            }
+
+            .selected-row{
+                background-color: #242a2d !important;
+
+                &:hover{
+                    background-color: #743470;
+
+                    .table-row-item{
+                        color: white;
+                        font-weight: bold;
+
+                        input[type=checkbox]{
+                            background-color: #522652;
+                        }
+                    }
+                }
+
+                .table-row-item{
+                    color: white;
+                    font-weight: bold;
+                }
+
+                input[type=checkbox]{
+                    background-color: #ffffff !important;
+                }
+            }
+            
+        }
+    }
+
+
+
+
+
     .hide{
         display: none;
     }

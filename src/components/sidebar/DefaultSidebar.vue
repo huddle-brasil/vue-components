@@ -2,7 +2,7 @@
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="header-title">{{title}}</div>
-            <div class="header-collapse">
+            <div class="header-collapse" @click="toggleCollapseHeader($event)">
                 <div class="arrow-left"></div>
             </div>
         </div>
@@ -44,9 +44,14 @@ export default {
     methods: {
         toggleCollapseNavItem(event){
             if(event.currentTarget.classList.contains('isCollapsable')) {
-                console.log('event.currentTarget 1: ', event.currentTarget)
                 event.currentTarget.classList.toggle("show")
                 event.currentTarget.classList.toggle("active")
+            }
+        },
+        toggleCollapseHeader(event){
+            console.log('event.currentTarget: ', event.path)
+            for (const path of event.path) {
+                if(path.classList && path.classList.contains('sidebar')) path.classList.toggle('closed')
             }
         }
     },
@@ -200,10 +205,28 @@ export default {
             }
         }
     }
-    .fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active em versões anteriores a 2.1.8 */ {
-  opacity: 0;
-}
+    .sidebar.closed{    
+        max-width: 100px;
+
+        .sidebar-header{
+            writing-mode: tb;
+            height: 100vw;
+            text-orientation: upright;
+            justify-content: flex-end;
+            flex-direction: row-reverse;
+            align-items: baseline;
+            padding: 20px 10px 0 0;
+
+            .header-collapse{
+                transform: rotate(180deg);
+            }
+            .header-title{
+                width: 0;
+                padding: 32px;
+            }
+        }
+        .sidebar-content{
+            display: none;
+        }
+    }
 </style>

@@ -10,7 +10,11 @@
 
 		<table-default 
 			:tableData="tableData" 
-			:tableKeys="tableKeys"></table-default>
+			:tableKeys="tableKeys"
+			:select="true"
+			primaryKey="name"
+			@unselectedRow="(data) => teste(data)"
+			@selectedRow="(data) => teste(data)"></table-default>
 	</div>
 </template>
 
@@ -21,7 +25,7 @@ import TableDefault from './components/TableDefault'
 export default {
 	name: 'app',
 	components: {
-		Sidebar,TableDefault
+		TableDefault,Sidebar
 	},
 
 	data:()=>({
@@ -39,17 +43,28 @@ export default {
 			}
 		],
 		tableData : [ 
-			{ name : 'Vitor', age : 22 }, 
-			{ name : 'Caroline', age : 20 },
-			{ name : 'Gabi', age : 22 }, 
-			{ name : 'Delayne', age : 23 }, 
-			{ name : 'Gui', age : 25 }, 
+			{ name : 'Vitor', lastName : 'Vicente', age : 22 }, 
+			{ name : 'Caroline', lastName : 'Andrade', age : 20 },
+			{ name : 'Gabi', lastName : 'Gabs', age : 22 }, 
+			{ name : 'Delayne', lastName : 'dely', age : 23 }, 
+			{ name : 'Gui', lastName : 'Sales', age : 25 }, 
+			{ name : 'Fe', lastName : 'Ruivo', age : 28 }, 
+			{ name : 'Leo', lastName : 'Japa', age : 22 }, 
 		],
-		tableKeys : [ { name : 'name', label : 'Nome', filter : true, background : '#fff' }, { name : 'age', label : 'Idade', filter : false, background : '#fff' }  ]
+		tableKeys : [ 
+			{ name : 'name', label : 'Nome', filter : true, background : '#6c7b84' }, 
+			{ name : 'lastName', label : 'Sobrenome', filter : true, background : '#6c7b84' },
+			{ name : 'age', label : 'Idade', filter : false, background : '#6c7b84' }
+		]
 	}),
 
 	created(){
 
+	},
+	methods: {
+		teste(data){
+			console.log(data)
+		}
 	}
 }
 </script>

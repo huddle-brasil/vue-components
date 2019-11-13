@@ -45,7 +45,8 @@ export default {
         toggleCollapseNavItem(event){
             if(event.currentTarget.classList.contains('isCollapsable')) {
                 console.log('event.currentTarget 1: ', event.currentTarget)
-                event.currentTarget.classList.toggle(["show","active"])
+                event.currentTarget.classList.toggle("show")
+                event.currentTarget.classList.toggle("active")
             }
         }
     },
@@ -143,6 +144,7 @@ export default {
                 .item-collapsable{
                     padding: 15px 32px;
                     background-color: #383f44;
+                    color: #ffffff;
                     display: none;
                 }
 

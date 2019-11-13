@@ -8,9 +8,14 @@
         </div>
         <div class="sidebar-content">
             <ul>
-                <li v-for="(item, index) of navItems" :key="index">
-                    <div :class="[navItemsListType == 'dot' ? 'dot' : 'arrow']"></div>
-                    {{item}}
+                <li v-for="(item, index) of navItems" :key="index" @click="toggleCollapseNavItem($event)" :class="{'isCollapsable' : isCollapsable}">
+                    <div class="item" >
+                        <div :class="[isCollapsable ? 'arrow' : 'dot']"></div>
+                        <span>{{item}}</span>
+                    </div>
+                    <div class="item-collapsable"  v-if="isCollapsable">
+                        <span>isCollapsable: {{isCollapsable}}</span>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -28,11 +33,23 @@ export default {
             type: Array,
             required: true
         },
-        navItemsListType:{
-            type: String,
-            default: 'dot'
+        isCollapsable:{
+            type: Boolean,
+            default: false
         }
-    }
+    },
+
+    data:()=>({}),
+
+    methods: {
+        toggleCollapseNavItem(event){
+            if(event.currentTarget.classList.contains('isCollapsable')) {
+                console.log('event.currentTarget 1: ', event.currentTarget)
+                event.currentTarget.classList.toggle("show")
+                event.currentTarget.classList.toggle("active")
+            }
+        }
+    },
 }
 </script>
 
@@ -81,13 +98,13 @@ export default {
         }
 
         .sidebar-content{
-            padding: 32px;
+            margin: 15px 0;
             letter-spacing: 1px;
 
             ul>li{
-                padding: 0 0 15px;
                 display: flex;
-                align-items: center;
+                line-height: 20px;
+                flex-direction: column;
 
                 .dot{
                     width: 5px;
@@ -102,16 +119,58 @@ export default {
                     border-top: 5px solid transparent;
                     border-bottom: 5px solid transparent; 
                     border-left:5px solid #FFF581; 
-
+                    transition: transform .2s
                 }
 
                 .dot, .arrow{
                     margin: 0 15px 0 0;
                 }
 
-                &:not(:last-child){
-                    padding: 0 0 15px;
+                .item{
+                    display: flex;
+                    align-items: center;
+                    padding: 15px 32px !important;
+                    
+                    &:not(:last-child){
+                        padding: 0 0 15px;
+                    }
+
                 }
+                .item.active{
+                    background-color: #76FFF5;
+                    color: #333;
+                    font-weight: 700;            
+                }
+                .item-collapsable{
+                    padding: 15px 32px;
+                    background-color: #383f44;
+                    color: #ffffff;
+                    display: none;
+                }
+
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+
+            .show{
+                .item-collapsable{
+                    display: flex
+                }
+            }
+
+            ul>li.show {
+                    .item{
+                        .arrow{
+                            transform: rotate(90deg)
+                        }
+                    }
+                }
+
+            ul>li.active{
+                background-color: #76FFF5;
+                color: #333;
+                font-weight: 700;            
             }
         }
 
@@ -130,5 +189,21 @@ export default {
             border-bottom: 5px solid transparent;
             border-right: 5px solid #7b7b7b;
         }
+
+        &:nth-of-type(odd){
+            .sidebar-content{
+                ul>li.active{
+                    background-color: #44E5DD;
+                    color: #333;
+                    font-weight: 700;            
+                }
+            }
+        }
     }
+    .fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active em versões anteriores a 2.1.8 */ {
+  opacity: 0;
+}
 </style>

@@ -1,11 +1,12 @@
 <template>
 	<div id="app">
-		<!-- <Sidebar 
+		<Sidebar 
 			v-for="sidebar of sidebars" 
 			:key="sidebar.title"
 			:title="sidebar.title" 
 			:navItems="sidebar.navItems" 
-			:navItemsListType="sidebar.navItemsListType"></Sidebar> -->
+			:isCollapsable="sidebar.isCollapsable"
+			></Sidebar>
 
 		<table-default 
 			:tableData="tableData" 
@@ -19,13 +20,13 @@
 </template>
 
 <script>
-// import Sidebar from './components/sidebar/DefaultSidebar'
+import Sidebar from './components/sidebar/DefaultSidebar'
 import TableDefault from './components/TableDefault'
 
 export default {
 	name: 'app',
 	components: {
-		TableDefault
+		TableDefault,Sidebar
 	},
 
 	data:()=>({
@@ -39,6 +40,7 @@ export default {
 				title: 'Workspace',
 				navItems: ["Programa de estágio USIMINAS 2020", "Programa de trainee Líder aviação 2020"],
 				navItemsListType: 'arrow',
+				isCollapsable: true
 			}
 		],
 		tableData : [ 

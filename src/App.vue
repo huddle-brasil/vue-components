@@ -5,7 +5,8 @@
 			:key="sidebar.title"
 			:title="sidebar.title" 
 			:navItems="sidebar.navItems" 
-			:navItemsListType="sidebar.navItemsListType"></Sidebar>
+			:isCollapsable="sidebar.isCollapsable"
+			></Sidebar>
 
 		<table-default 
 			:tableData="tableData" 
@@ -34,6 +35,7 @@ export default {
 				title: 'Workspace',
 				navItems: ["Programa de estágio USIMINAS 2020", "Programa de trainee Líder aviação 2020"],
 				navItemsListType: 'arrow',
+				isCollapsable: true
 			}
 		],
 		tableData : [ 

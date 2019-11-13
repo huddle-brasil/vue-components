@@ -169,11 +169,6 @@ export default {
                     padding-left: 50px
                 }
 
-
-                span{
-
-                }
-
                 input{
                     background: transparent;
                     border: none;
@@ -243,9 +238,6 @@ export default {
                         &:first-child{
                             /* padding-left: 50px */
                         }
-                    }
-
-                    .row-item-checkbox{
                     }
 
                     input[type=checkbox] {

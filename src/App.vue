@@ -12,6 +12,7 @@
 			:tableKeys="tableKeys"
 			:select="true"
 			primaryKey="name"
+			:rowActions="rowActions"
 			@unselectedRow="(data) => teste(data)"
 			@selectedRow="(data) => teste(data)"></table-default>
 	</div>
@@ -53,6 +54,10 @@ export default {
 			{ name : 'name', label : 'Nome', filter : true, background : '#6c7b84' }, 
 			{ name : 'lastName', label : 'Sobrenome', filter : true, background : '#6c7b84' },
 			{ name : 'age', label : 'Idade', filter : false, background : '#6c7b84' }
+		],
+		rowActions : [
+			{ action: 'generateSingleReport', label: 'Gerar Relatório', image: require('../public/report.png') },
+			{ action: 'generateSingleReport', label: 'Gerar Report', image: require('../public/report.png') }
 		]
 	}),
 

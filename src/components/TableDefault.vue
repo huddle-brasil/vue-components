@@ -32,6 +32,17 @@
                         <input @click="checkedToggle(index)" :ref="`check${index}`" type="checkbox" name="fruit-2" value="banana">
                     </label>
                     <span class="row-item-text">{{ item }}</span>
+                    <div class="row-actions" v-if="rowActions && indexTd === 0">
+                        <div class="row-action" 
+                             v-for="(rowAction, rowActionIndex) in rowActions"
+                             :key="rowActionIndex"
+                             @click="rowActionEmitted(rowAction.action, row, index)">
+                            <div class="tooltip">
+                                {{ rowAction.label }}
+                            </div>
+                            <img :src="rowAction.image" alt="">
+                        </div>
+                    </div>
                 </td>
             </tr>
         </tbody>
@@ -61,6 +72,9 @@ export default {
         primaryKey: {
             type: String,
             required: true
+        },
+        rowActions: {
+            type: Array
         }
     },
     methods: {
@@ -90,6 +104,9 @@ export default {
         focusOutInput(index){
             const [ thead ] = this.$refs[`th${index}`]
             thead.classList.remove('selectedTh')
+        },
+        rowActionEmitted(rowAction, row){
+            this.$emit(rowAction, row)
         }
     },
     computed: {
@@ -185,7 +202,7 @@ export default {
 
             .table-row{
 
-                height: 40px;
+                height: 45px;
                 cursor: pointer;
 
                 &:nth-child(even){
@@ -215,6 +232,7 @@ export default {
                     vertical-align: middle;
                     color: #2e2e2e;
                     font-size: 14px;
+                    position: relative;
 
                     &:first-child{
                         text-align: left;
@@ -271,6 +289,54 @@ export default {
                         border-color: black;
                         background: #ddd;
                         color: gray;
+                    }
+                    
+                    .row-actions{
+                        position: absolute;
+                        top: 0;
+                        right: 10px;
+                        height: 45px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        
+
+                        .row-action{
+                            margin: 0 5px;
+                            visibility: hidden;
+                            position: relative;
+
+                            &:hover .tooltip{
+                                visibility: visible;
+                            }
+
+                            .tooltip{
+                                position: absolute;
+                                top: -45px;
+                                right: -60px;
+                                color: #F7E178;
+                                background-color: #421b43;
+                                width: 100px;
+                                height: 40px;
+                                text-align: center;
+                                display: flex;
+                                align-items: center;
+                                border-radius: 20px;
+                                padding: 0 13px;
+                                font-weight: bold;
+                                font-size: 12px;
+                                justify-content: center;
+                                visibility: hidden;
+                            }
+
+                            img{
+                                height: 25px;
+                            }
+                        }
+                    }
+
+                    &:hover .row-action{
+                        visibility: visible;
                     }
                 }
             }

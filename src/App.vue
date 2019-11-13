@@ -7,7 +7,6 @@
 			:navItems="sidebar.navItems" 
 			:isCollapsable="sidebar.isCollapsable"
 			></Sidebar>
-
 		<table-default 
 			:tableData="tableData" 
 			:tableKeys="tableKeys"
@@ -21,12 +20,13 @@
 
 <script>
 import Sidebar from './components/sidebar/DefaultSidebar'
-import TableDefault from './components/TableDefault'
+import TableDefault from './components/tables/TableDefault'
 
 export default {
 	name: 'app',
 	components: {
-		TableDefault,Sidebar
+		TableDefault,
+		Sidebar
 	},
 
 	data:()=>({
@@ -58,7 +58,6 @@ export default {
 			{ name : 'age', label : 'Idade', filter : false, background : '#6c7b84' }
 		],
 		rowActions : [
-			{ action: 'generateSingleReport', label: 'Gerar Relatório', image: require('../public/report.png') },
 			{ action: 'generateSingleReport', label: 'Gerar Report', image: require('../public/report.png') }
 		]
 	}),

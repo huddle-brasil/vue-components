@@ -6,7 +6,7 @@
                 :style="{backgroundColor : key.background}"
                 @click="openFilterInput(key, index)"
                 :ref="`th${index}`">
-                <img class="search-icon" src="../../../public/lupinha.png" alt="">
+                <img v-if="key.filter" class="search-icon" src="../../../public/lupinha.png" alt="">
                 <span 
                     v-if="!key.filter"
                     v-show="!selectedFilter || selectedFilter != key.name" 
@@ -150,11 +150,10 @@ export default {
 <style lang="scss" scoped>
 
     .table-default{
-        width: 70%;
-        margin: 5% auto;
         table-layout: fixed;
         border-collapse: separate;
         border-spacing: 3px 0;
+        width: 100%;
 
         .table-header{
             
@@ -163,9 +162,9 @@ export default {
                 color: white;
                 font-weight: bold;
                 text-transform: uppercase;
-                height: 35px;
+                height: 45px;
                 vertical-align: middle;
-                font-size: 11px;
+                font-size: 13px;
                 border-top-right-radius: 5px;
                 border-top-left-radius: 5px;
                 letter-spacing: 2px;
@@ -202,7 +201,7 @@ export default {
                         color: white;
                         font-weight: bold;
                         text-transform: uppercase;
-                        font-size: 11px;
+                        font-size: 13px;
                         letter-spacing: 2px;
                         width: 100%;
                         text-align: center;
@@ -250,6 +249,10 @@ export default {
                     color: #2e2e2e;
                     font-size: 14px;
                     position: relative;
+
+                    .row-item-text{
+                        font-size: 15px;
+                    }
 
                     &:first-child{
                         text-align: left;
@@ -330,9 +333,11 @@ export default {
                                 border-radius: 20px;
                                 padding: 0 13px;
                                 font-weight: bold;
-                                font-size: 12px;
+                                font-size: 11px;
                                 justify-content: center;
                                 visibility: hidden;
+                                text-transform: uppercase;
+                                letter-spacing: 1px;
                             }
 
                             img{
@@ -372,7 +377,6 @@ export default {
                     background-color: #ffffff !important;
                 }
             }
-            
         }
     }
 </style>

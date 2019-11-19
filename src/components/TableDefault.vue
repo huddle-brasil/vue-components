@@ -18,7 +18,7 @@
                     type="text" 
                     :placeholder="key.label" 
                     v-model="filterArguments"
-                    @blur="focusOutInput(index)">
+                    @blur="focusOutInput(index, key)">
             </th>
         </thead>
         <tbody class="table-body">
@@ -234,15 +234,7 @@ export default {
                         /* padding-left: 50px */
                     }
 
-                    .row-item-text{
-                        &:first-child{
-                            /* padding-left: 50px */
-                        }
-                    }
-
                     input[type=checkbox] {
-                        -webkit-appearance: none;
-                        -moz-appearance: none;
                         appearance: none;
                         outline: none;
                         cursor: pointer;

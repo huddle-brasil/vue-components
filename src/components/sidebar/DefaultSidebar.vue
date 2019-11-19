@@ -8,13 +8,16 @@
         </div>
         <div class="sidebar-content">
             <ul>
-                <li v-for="(item, index) of navItems" :key="index" @click="toggleCollapseNavItem($event)" :class="{'isCollapsable' : isCollapsable}">
-                    <div class="item" >
+                <li v-for="(item, index) of navItems" :key="index">
+                    <div class="item" @click="toggleCollapseNavItem(index, $event)" :class="{'isCollapsable' : isCollapsable}">
                         <div :class="[isCollapsable ? 'arrow' : 'dot']"></div>
-                        <span>{{item}}</span>
+                        <span>{{item.navHeader}}</span>
                     </div>
-                    <div class="item-collapsable"  v-if="isCollapsable">
-                        <span>isCollapsable: {{isCollapsable}}</span>
+                    <div class="collapsable" ref="collapsable">
+                        <div class="item-collapsable" @click="toggleActive($event)" v-for="child of item.navChild" :key="child.navChild">
+                            <div class="dot"></div>
+                            <span>{{child}}</span>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -36,24 +39,25 @@ export default {
         isCollapsable:{
             type: Boolean,
             default: false
+        },
+        haveSideMenu: {
+            type: Boolean,
+            default: false
         }
     },
 
-    data:()=>({}),
-
     methods: {
-        toggleCollapseNavItem(event){
+        toggleCollapseNavItem(index, event){
             if(event.currentTarget.classList.contains('isCollapsable')) {
-                event.currentTarget.classList.toggle("show")
-                event.currentTarget.classList.toggle("active")
+                event.currentTarget.classList.toggle('active')
+                for (const child of this.$refs.collapsable[index].children) child.classList.toggle('show')
             }
         },
-        toggleCollapseHeader(event){
-            console.log('event.currentTarget: ', event.path)
-            for (const path of event.path) {
-                if(path.classList && path.classList.contains('sidebar')) path.classList.toggle('closed')
-            }
-        }
+        toggleActive(event){
+            for (const child of document.querySelectorAll('.item-collapsable')) child.classList.remove('active')
+            event.currentTarget.classList.add('active')
+        },
+        toggleCollapseHeader(event){for (const path of event.path) if(path.classList && path.classList.contains('sidebar')) path.classList.toggle('closed')}
     },
 }
 </script>
@@ -64,7 +68,7 @@ export default {
         flex-direction: column;
         width: 300px;
         height: 100vh;
-        color: #ffffff;
+        color: #CFDCE5;
         background-color: #2F353A;
 
         &:nth-of-type(odd){
@@ -140,17 +144,34 @@ export default {
                         padding: 0 0 15px;
                     }
 
+                    &:hover{
+                        background-color: #1D1D1B;
+                    }
+
                 }
                 .item.active{
-                    background-color: #76FFF5;
-                    color: #333;
+                    background-color: #474F54;
+                    color: #76FFF5;
                     font-weight: 700;            
                 }
                 .item-collapsable{
                     padding: 15px 32px;
-                    background-color: #383f44;
+                    background-color: #3B4247;
                     color: #ffffff;
+                    font-weight: 100;
                     display: none;
+                    align-items: center;
+                }
+                .item-collapsable.active{
+                    background-color: #76FFF5;
+                    color: #2F353A;
+                    font-weight: 700;
+                    z-index: 9;
+
+                    .dot{
+                        background-color: #000
+                    }
+
                 }
 
                 &:hover{
@@ -158,24 +179,32 @@ export default {
                 }
             }
 
-            .show{
-                .item-collapsable{
-                    display: flex
+            .show.item-collapsable{
+                display: flex;                    
+            }
+            
+
+            ul>li{
+                .active {
+                    .arrow{
+                        transform: rotate(90deg)
+                    }
                 }
             }
 
-            ul>li.show {
+
+            ul>li{
+                .active{
                     .item{
-                        .arrow{
-                            transform: rotate(90deg)
-                        }
+                        background-color: #333;
+                        color: #76FFF5;
+                        font-weight: 700;            
+                    }
+                    .arrow{
+                        border-left: 5px solid #76FFF5;
                     }
                 }
 
-            ul>li.active{
-                background-color: #76FFF5;
-                color: #333;
-                font-weight: 700;            
             }
         }
 
@@ -198,8 +227,8 @@ export default {
         &:nth-of-type(odd){
             .sidebar-content{
                 ul>li.active{
-                    background-color: #44E5DD;
-                    color: #333;
+                    background-color: #474F54;
+                    color: #76FFF5;
                     font-weight: 700;            
                 }
             }

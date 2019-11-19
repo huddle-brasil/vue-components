@@ -1,12 +1,15 @@
 <template>
 	<div id="app">
+		<Navbar
+			navPosition="left"
+		></Navbar>
 		<Sidebar 
 			v-for="sidebar of sidebars" 
 			:key="sidebar.title"
 			:title="sidebar.title" 
 			:navItems="sidebar.navItems" 
 			:isCollapsable="sidebar.isCollapsable"
-			></Sidebar>
+		></Sidebar>
 		<table-default 
 			:tableData="tableData" 
 			:tableKeys="tableKeys"
@@ -20,25 +23,35 @@
 
 <script>
 import Sidebar from './components/sidebar/DefaultSidebar'
+import Navbar from './components/navbar/DefaultNavbar'
 import TableDefault from './components/tables/TableDefault'
 
 export default {
 	name: 'app',
 	components: {
 		TableDefault,
-		Sidebar
+		Sidebar,
+		Navbar
 	},
 
 	data:()=>({
 		sidebars:[
 			{
-				title: 'Empresa',
-				navItems: ["Barcelona F.C", "S.E Palmeiras", "Philadelfia Eagles"],
-				navItemsListType: 'dot',
-			},
-			{
-				title: 'Workspace',
-				navItems: ["Programa de estágio USIMINAS 2020", "Programa de trainee Líder aviação 2020"],
+				title: 'Processos',
+				navItems: [
+					{
+						navHeader: 'Empresa 1',
+						navChild: ['Programa de estágio 1','Programa de estágio 1.1'],
+					},
+					{
+						navHeader: 'Empresa 2',
+						navChild: ['Programa de estágio 2'],
+					},
+					{
+						navHeader: 'Empresa 3',
+						navChild: ['Programa de estágio 3'],
+					},
+				],
 				navItemsListType: 'arrow',
 				isCollapsable: true
 			}

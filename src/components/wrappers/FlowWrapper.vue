@@ -9,14 +9,29 @@
                 <span class="info-text">{{ infoText }}</span>
             </div>
             <div class="info-buttons">
-                <button-default :textButton="textButton" color="yellow"></button-default>
+                <button-default 
+                    :disabled="buttonEnabled" 
+                    :textButton="textButton" 
+                    :color="buttonEnabled ? 'yellow' : 'blue'"></button-default>
             </div>
         </div>
     </div>
 </template>
 <script>
 import ButtonDefault from '../buttons/ButtonDefault'
+import { Bus } from '@/event-bus.js'
 export default { 
+    data(){
+        return{
+            buttonEnabled : false
+        }
+    },
+    created(){
+        Bus.$on('enableButton', this.enableButton)
+    },
+    destroyed(){
+        Bus.$off('enableButton')
+    },
     components : {
         ButtonDefault
     },
@@ -26,6 +41,14 @@ export default {
         },
         textButton: {
             type: String
+        }
+    },
+    methods: {
+        enableButton(enableData){
+            console.log(enableData)
+            this.buttonEnabled = this.enableData.enable ? true : false
+            this.$parent.$emit('flowWrapperAction', enableData.actionData)
+            console.log(enableData)
         }
     }
 }
@@ -42,6 +65,7 @@ export default {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 100px;
 
             .info{
                 width: 60%;
@@ -49,17 +73,21 @@ export default {
                 align-items: center;
 
                 .info-img{
-                    height: 30px;
+                    height: 20px;
                     margin-right: 10px
                 }
 
                 .info-text{
-                    font-size: 12px;
-                    color: rgb(226, 226, 226);
+                    font-size: 10px;
+                    color: rgb(204, 204, 204);
+                    line-height: 15px;
+                    width: 80%;
                 }
             }
             .info-buttons{
                 width: 40%;
+                display: flex;
+                justify-content: flex-end;
             }
         }
     }

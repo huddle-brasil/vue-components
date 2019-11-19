@@ -6,7 +6,8 @@
                 type="text" 
                 class="input" 
                 :placeholder="placeholder" 
-                v-model="argument">
+                v-model="argument"
+                @input="enableButton">
             <div v-if="filterable" class="arrow-down" @click="arrowToggle()"></div>
         </div>
         <div class="filtarable-list" v-if="showList && filterable">
@@ -19,6 +20,7 @@
 <script>
 import List from '../shared/List'
 import { alphabeticalOrder, filterArrayByArgument } from '../../helpers/filters.js'
+import { Bus } from '@/event-bus.js'
 export default {
     components: {
         List
@@ -67,6 +69,11 @@ export default {
         actionListItem(selectedItem){
             this.argument = selectedItem.label
             this.toggleList(false)
+            this.enableButton()
+        },
+        enableButton(){
+            const enable = this.argument ? true : false
+            Bus.$emit('enableButton', { enable, actionData : this.argument })
         }
     }
 }

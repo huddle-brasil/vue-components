@@ -8,7 +8,8 @@
             <input-default
                 placeholder="Digite ou selecione o nome da empresa"
                 :list="list"
-                :filterable="true"></input-default>
+                :filterable="true"
+                ></input-default>
         </flow-wrapper>
     </div>
 </template>

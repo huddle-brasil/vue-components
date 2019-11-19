@@ -1,6 +1,7 @@
 <template>
 	<div id="app">
-		<Navbar
+		<router-view></router-view>
+		<!-- <Navbar
 			navPosition="left"
 		></Navbar>
 		<Sidebar 
@@ -17,22 +18,22 @@
 			primaryKey="name"
 			:rowActions="rowActions"
 			@unselectedRow="(data) => teste(data)"
-			@selectedRow="(data) => teste(data)"></table-default>
+			@selectedRow="(data) => teste(data)"></table-default> -->
 	</div>
 </template>
 
 <script>
-import Sidebar from './components/sidebar/DefaultSidebar'
-import Navbar from './components/navbar/DefaultNavbar'
-import TableDefault from './components/tables/TableDefault'
+// import Sidebar from './components/sidebar/DefaultSidebar'
+// import Navbar from './components/navbar/DefaultNavbar'
+// import TableDefault from './components/tables/TableDefault'
 
 export default {
 	name: 'app',
-	components: {
-		TableDefault,
-		Sidebar,
-		Navbar
-	},
+	// components: {
+	// 	TableDefault,
+	// 	Sidebar,
+	// 	Navbar
+	// },
 
 	data:()=>({
 		sidebars:[

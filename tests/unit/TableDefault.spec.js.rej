@@ -1,0 +1,3 @@
+diff a/tests/unit/TableDefault.spec.js b/tests/unit/TableDefault.spec.js	(rejected hunks)
+@@ -2 +1,0 @@ import TableDefault from "@/components/TableDefault"
+-import { filterArrayByArgument } from '@/helpers/filters.js'

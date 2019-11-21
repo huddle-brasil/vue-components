@@ -1,7 +1,3 @@
-export const filterArrayByArgument = (columnData, argument) => {
-    const columnFiltered = columnData.filter(data => {
-        return data.startsWith(argument)
-    })
+export const filterArrayByArgument = (list, argument, key) => list.filter(data => data[key].toLowerCase().startsWith(argument.toLowerCase()))
 
-    return columnFiltered
-}
+export const alphabeticalOrder = (list, key) => list.sort((a,b) => a[key].localeCompare(b[key]))

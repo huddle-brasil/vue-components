@@ -1,5 +1,5 @@
 <template>
-    <button class="button-default" :class="{ disabled }" :disabled="disabled">
+    <button class="button-default" :class="[color, disabled]" :disabled="disabled">
         {{ textButton }}
     </button>
 </template>
@@ -13,16 +13,25 @@ export default {
         disabled: {
             type: Boolean,
             default: false
+        },
+        selected: {
+            type: Boolean,
+            default: false
+        },
+        color: {
+            type: String
         }
+    },
+    computed: {
+        
     }
 }
 </script>
 <style lang="scss">
     .button-default{
-        width: 150px;
-        height: 30px;
+        height: 45px;
         border-radius: 20px;
-        border: 1px solid black;
+        border: 1px solid transparent;
         background-color: white;
         font-weight: bold;
         text-transform: uppercase;
@@ -30,11 +39,21 @@ export default {
         font-size: 10px;
         outline: none;
         cursor: pointer;
+        padding: 0 50px;
     }
 
     .disabled{
-       border: 1px solid #cacccd;
-       color: #cacccd;
        cursor: not-allowed;
+    }
+
+    .yellow{
+        background-color: #FFF581;
+        color: black;
+        border: none;
+    }
+
+    .blue{
+        background-color: #21445a;
+        color: #4c6a7b;
     }
 </style>

@@ -90,7 +90,7 @@ export default {
                 border-bottom: 1px solid white;
                 outline: none;
                 color: white;
-                width: 600px;
+                width: 100%;
                 height: 50px;
                 font-size: 16px;
                 letter-spacing: 2px;

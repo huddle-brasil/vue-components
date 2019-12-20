@@ -21,15 +21,12 @@ export default {
         color: {
             type: String
         }
-    },
-    computed: {
-        
     }
 }
 </script>
 <style lang="scss">
     .button-default{
-        height: 45px;
+        height: 40px;
         border-radius: 20px;
         border: 1px solid transparent;
         background-color: white;

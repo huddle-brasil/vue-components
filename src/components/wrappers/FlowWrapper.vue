@@ -1,24 +1,34 @@
 <template>
     <div class="flow-wrapper">
-        <div class="slot">
-            <slot></slot>
+        <div class="flow-history-container">
+            <flow-history :historical="historical"></flow-history>
         </div>
-        <div class="info-bottom">
-            <div class="info" v-if="infoText">
-                <img src="../../../public/info.png" alt="" class="info-img">
-                <span class="info-text">{{ infoText }}</span>
+        <div class="flow-input-container" :style="{ width : `${width}`}">
+            <div class="slot">
+                <slot></slot>
             </div>
-            <div class="info-buttons">
-                <button-default 
-                    :disabled="buttonEnabled" 
-                    :textButton="textButton" 
-                    :color="buttonEnabled ? 'yellow' : 'blue'"></button-default>
+            <div class="info-bottom">
+                <div class="info" v-if="infoText">
+                    <img src="../../../public/info.png" alt="" class="info-img">
+                    <span class="info-text">{{ infoText }}</span>
+                </div>
+                <div class="info-buttons">
+                    <button-default 
+                        :disabled="buttonEnabled" 
+                        :textButton="textButton" 
+                        :color="buttonEnabled ? 'yellow' : 'blue'"></button-default>
+                </div>
             </div>
+        </div>
+        <div class="close-container">
+            <close></close>
         </div>
     </div>
 </template>
 <script>
 import ButtonDefault from '../buttons/ButtonDefault'
+import FlowHistory from '../shared/FlowHistory'
+import Close from '../shared/Close'
 import { Bus } from '@/event-bus.js'
 export default { 
     data(){
@@ -33,7 +43,9 @@ export default {
         Bus.$off('enableButton')
     },
     components : {
-        ButtonDefault
+        ButtonDefault,
+        FlowHistory,
+        Close
     },
     props:{
         infoText: {
@@ -41,26 +53,44 @@ export default {
         },
         textButton: {
             type: String
+        },
+        width: {
+            type: String
+        },
+        historical: {
+            type: Array
         }
     },
     methods: {
         enableButton(enableData){
-            console.log(enableData)
-            this.buttonEnabled = this.enableData.enable ? true : false
+            this.buttonEnabled = enableData.enable ? true : false
             this.$parent.$emit('flowWrapperAction', enableData.actionData)
-            console.log(enableData)
         }
     }
 }
 </script>
 <style lang="scss" scoped>
     .flow-wrapper{
-        width: 42%;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
 
-        .slot{
-
+        .flow-history-container{
+            position: absolute;
+            top: 30px;
+            left: 30px;
         }
 
+        .close-container{
+            position: absolute;
+            top: 20px;
+            right: 30px;
+        }
+
+        
         .info-bottom{
             display: flex;
             justify-content: space-between;

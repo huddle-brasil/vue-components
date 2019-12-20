@@ -4,18 +4,20 @@
             infoText="Para cadastrar um nova empresa basta digitar o nome
             dela ao invés de selecioná-la. Ela já estará presente
             na listas nos próximos orçamentos."
-            textButton="Prosseguir">
+            textButton="Prosseguir"
+            width="50%"
+            :historical="historical">
             <input-default
                 placeholder="Digite ou selecione o nome da empresa"
                 :list="list"
-                :filterable="true"
-                ></input-default>
+                :filterable="true"></input-default>
         </flow-wrapper>
     </div>
 </template>
 <script>
 import InputDefault from '../components/inputs/InputDefault'
 import FlowWrapper from '../components/wrappers/FlowWrapper'
+
 export default {
     components: {
         InputDefault,
@@ -34,6 +36,10 @@ export default {
                 { id: 'botafogo', label: 'Botafogo' },
                 { id: 'chapecoense', label: 'Chapecoense' },
                 { id: 'corinthians', label : 'Corinthians' }
+            ],
+            historical: [
+                { title: 'Empresa', item: 'National Football' },
+                { title: 'Processo', item: 'Trainee of Making Money 2020' }
             ]
         }
     }

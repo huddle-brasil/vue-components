@@ -1,9 +1,8 @@
 <template>
 	<div id="app">
-		<router-view></router-view>
-		<!-- <Navbar
-			navPosition="left"
-		></Navbar>
+		<!-- <router-view></router-view> -->
+		<Navbar navPosition="top" :navItems="navbar.navItems" :logo="navbar.logoPath">
+		</Navbar>
 		<Sidebar 
 			v-for="sidebar of sidebars" 
 			:key="sidebar.title"
@@ -18,24 +17,45 @@
 			primaryKey="name"
 			:rowActions="rowActions"
 			@unselectedRow="(data) => teste(data)"
-			@selectedRow="(data) => teste(data)"></table-default> -->
+			@selectedRow="(data) => teste(data)"></table-default>
 	</div>
 </template>
 
 <script>
-// import Sidebar from './components/sidebar/DefaultSidebar'
-// import Navbar from './components/navbar/DefaultNavbar'
-// import TableDefault from './components/tables/TableDefault'
+import Sidebar from './components/sidebar/DefaultSidebar'
+import Navbar from './components/navbar/DefaultNavbar'
+import TableDefault from './components/tables/TableDefault'
 
 export default {
 	name: 'app',
-	// components: {
-	// 	TableDefault,
-	// 	Sidebar,
-	// 	Navbar
-	// },
+	components: {
+		TableDefault,
+		Sidebar,
+		Navbar
+	},
 
 	data:()=>({
+		navbar:{
+			logoPath: '../../../huddle-logo.png',
+			navItems: [
+				{
+					route: '',
+					strokeColor: '',
+					type: 'svg',
+					source: `<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21.44 23.34"><defs><style>.cls-1{fill:none;stroke-miterlimit:10;}</style></defs><title>menu-icon</title><line class="cls-1" x1="6.98" y1="0.5" x2="21.44" y2="0.5"/><line class="cls-1" x1="6.98" y1="22.34" x2="21.44" y2="22.34"/><line class="cls-1" x1="6.98" y1="16.88" x2="21.44" y2="16.88"/><line class="cls-1" x1="6.98" y1="11.42" x2="21.44" y2="11.42"/><line class="cls-1" x1="6.98" y1="5.96" x2="21.44" y2="5.96"/><rect class="cls-1" x="0.5" y="0.5" width="3.41" height="22.34"/></svg>`
+				},
+				{
+					type: 'svg',
+					source: `<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.51 27.39"><defs><style>.cls-1{fill:none;stroke-miterlimit:10;}</style></defs><title>money-icon</title><path class="cls-1" d="M17.85,5.63h-13a4,4,0,0,0-4,4h0a4,4,0,0,0,4,4h8.6a4,4,0,0,1,4,4v.3a4,4,0,0,1-4,4H.9" transform="translate(-0.4)"/><line class="cls-1" x1="8.97" x2="8.97" y2="5.63"/><line class="cls-1" x1="8.97" y1="21.76" x2="8.97" y2="27.39"/></svg>`,
+					route: ''
+				},
+				{
+					type: 'svg',
+					source: `<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21.38 24.29"><defs><style>.cls-1{fill:none;stroke-miterlimit:10;}</style></defs><title>user-icon</title><circle class="cls-1" cx="10.69" cy="7.05" r="6.55"/><path class="cls-1" d="M21.09,24.83a10.19,10.19,0,0,0-20.38,0Z" transform="translate(-0.21 -1.04)"/></svg>`,
+					route: ''
+				}
+			]
+		},
 		sidebars:[
 			{
 				title: 'Processos',
